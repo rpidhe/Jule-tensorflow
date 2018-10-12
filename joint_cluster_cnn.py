@@ -1,5 +1,9 @@
+import time
+
 import numpy as np
 import tensorflow as tf
+from sklearn.metrics import normalized_mutual_info_score, accuracy_score
+from sklearn.utils import linear_assignment_
 from tensorflow.contrib.layers import convolution2d, batch_norm, fully_connected, max_pool2d, flatten
 from tensorflow.examples.tutorials.mnist import input_data
 from scipy.sparse import csr_matrix
@@ -12,8 +16,45 @@ import math
 import timeit
 import logging
 import os.path
+import tensorflow.keras.layers as keras_layers
+import tensorflow.keras.backend as K
+import pathlib
+def bestMap(L1, L2):
+    if L1.__len__() != L2.__len__():
+        print('size(L1) must == size(L2)')
 
-class joint_cluster_cnn():
+    Label1 = np.unique(L1)
+    nClass1 = Label1.__len__()
+    Label2 = np.unique(L2)
+    nClass2 = Label2.__len__()
+
+    nClass = max(nClass1, nClass2)
+    G = np.zeros((nClass, nClass))
+    for i in range(nClass1):
+        for j in range(nClass2):
+            G[i][j] = np.nonzero((L1 == Label1[i]) * (L2 == Label2[j]))[0].__len__()
+
+    c = linear_assignment_.linear_assignment(-G.T)[:, 1]
+    newL2 = np.zeros(L2.__len__())
+    for i in range(nClass2):
+        for j in np.nonzero(L2 == Label2[i])[0]:
+            if len(Label1) > c[i]:
+                newL2[j] = Label1[c[i]]
+
+    return accuracy_score(L1, newL2)
+
+def conv_block(input_tensor,
+               filters,
+               kernel_size,
+               strides=(2, 2),
+               padding="same"):
+    x = keras_layers.Conv2D(filters, kernel_size=kernel_size, strides=strides,
+                      kernel_initializer='he_normal',padding=padding,
+                      )(input_tensor)
+    x = keras_layers.BatchNormalization(axis=-1)(x)
+    x = keras_layers.Activation('relu')(x)
+    return x
+class Jule():
 
     Ks = 20  # the number of nearest neighbours of a sample
     Kc = 5  # the number of nearest clusters of a cluster
@@ -31,19 +72,26 @@ class joint_cluster_cnn():
     iter_cnn = 0
 
     def __init__(self, dataset, RC=True, updateCNN=True, eta=0.9):
-        self.sess = tf.InteractiveSession()
-
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        self.sess = tf.Session(config=config)
         self.dataset = dataset
         self.RC = RC
         self.updateCNN = updateCNN
         self.eta = eta
         self.tic = timeit.default_timer()
+        self.output_path = pathlib.Path("./results/" + dataset )
 
+        if not self.output_path.exists():
+            self.output_path.mkdir()
+        self.weight_save_path = self.output_path.joinpath("params/weight.h5")
+        if not self.weight_save_path.parent.exists():
+            self.weight_save_path.parent.mkdir()
         # set up logging to file - see previous section for more details
         logging.basicConfig(level=logging.DEBUG,
                             format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
                             datefmt='%m-%d %H:%M',
-                            filename='./logfile/logfile.log',
+                            filename='./logfile/' + dataset + time.strftime("%d-%m-%Y_") + time.strftime("%H-%M-%S") +".log",
                             filemode='w')
         # define a Handler which writes INFO messages or higher to the sys.stderr
         console = logging.StreamHandler()
@@ -55,8 +103,8 @@ class joint_cluster_cnn():
         # add the handler to the root logger
         logging.getLogger('').addHandler(console)
         self.logger = logging.getLogger('')
-
         self.logger.info('%.2f s, Begin to extract dataset', timeit.default_timer() - self.tic)
+        self.tic = timeit.default_timer()
         # Input data
         if 'mnist' in dataset:
             (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
@@ -73,6 +121,15 @@ class joint_cluster_cnn():
                 self.images = np.reshape(x_test, [x_test.shape[0], -1])
                 self.gnd = y_test
                 self.logger.info('%.2f s, Finished extracting MNIST-test dataset', timeit.default_timer() - self.tic)
+        # if 'mnist-test' in dataset:
+        #     mnist = input_data.read_data_sets('MNIST_data', dtype=tf.uint8, one_hot=False)
+        #     self.images = mnist.test.images
+        #     self.gnd = mnist.test.labels
+        #     self.image_size1 = 28
+        #     self.image_size2 = 28
+        #     self.channel = 1
+        #     self.K = 10
+        #     self.logger.info('%.2f s, Finished extracting MNIST-test dataset', timeit.default_timer() - self.tic)
         # elif 'mnist-full' in dataset:
         #     mnist = input_data.read_data_sets('MNIST_data', dtype=tf.uint8, one_hot=False)
         #     images = np.concatenate((mnist.test.images, mnist.validation.images), axis=0)
@@ -163,57 +220,96 @@ class joint_cluster_cnn():
             self.Ns,  # Decay step.
             0.99995,  # Decay rate.
             staircase=False)
-    def model(self, x):
+    def build_model(self):
         # CNN
-        data = tf.reshape(x, [-1, self.image_size1, self.image_size2, self.channel])
-
+        self.input_x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
+        inputs = keras_layers.Input(tensor=self.input_x)
+        x = keras_layers.Reshape([self.image_size1, self.image_size2, self.channel])(inputs)
         if 'mnist' in self.dataset: # 28 * 28
-            net = convolution2d(data, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 24 * 24
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 12 * 12
-            net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 8 * 8
+            x = conv_block(x,filters=50,kernel_size=(5, 5),strides=(1,1),padding="valid")
+            x = keras_layers.MaxPooling2D((2,2),strides=(2,2),padding="same")(x)
+            x = conv_block(x,filters=50,kernel_size=(5, 5),strides=(1,1),padding="valid")
         elif 'usps' in self.dataset: # 16 * 16
-            net = convolution2d(data, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 12 * 12
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 6 * 6
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
         elif 'coil' in self.dataset: # 128 * 128
-            net = convolution2d(data, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 124 * 124
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 62 * 62
-            net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 58 * 58
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 29 * 29
-            net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 25 * 25
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 13 * 13
-            net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 9 * 9
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 5 * 5
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
+
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
+
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
+
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
+
+            # net = convolution2d(data, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 124 * 124
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 62 * 62
+            # net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 58 * 58
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 29 * 29
+            # net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 25 * 25
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 13 * 13
+            # net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='VALID',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 9 * 9
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 5 * 5
         elif 'umist' in self.dataset: # 112 * 92
-            net = convolution2d(data, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='SAME',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 112 * 92
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 56 * 46
-            net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='SAME',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 56 * 46
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 28 * 23
-            net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='SAME',
-                                normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 28 * 23
-            net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 14 * 12
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
 
-        print(net.get_shape())
-        net = flatten(net)
-        print(net.get_shape())
-        net = fully_connected(net, num_outputs=160)
-        net = tf.nn.l2_normalize(net, 1)
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
 
-        net_shape = net.get_shape().as_list()
-        net_reshape = tf.reshape(net, [-1, net_shape[1]])
+            x = conv_block(x, filters=50, kernel_size=(5, 5), strides=(1, 1), padding="valid")
+            x = keras_layers.MaxPooling2D((2, 2), strides=(2, 2), padding="same")(x)
 
-        return net_reshape
+            # net = convolution2d(data, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='SAME',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 112 * 92
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 56 * 46
+            # net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='SAME',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 56 * 46
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 28 * 23
+            # net = convolution2d(net, num_outputs=50, kernel_size=(5, 5), stride=(1, 1), padding='SAME',
+            #                     normalizer_fn=batch_norm, activation_fn=tf.nn.relu)  # 28 * 23
+            # net = max_pool2d(net, [2,2], [2,2], padding='SAME')  # 14 * 12
+
+        print(x.get_shape())
+        x = keras_layers.Flatten()(x)
+        print(x.get_shape())
+        x = keras_layers.Dense(160)(x)
+        self.model = tf.keras.Model(inputs=inputs,outputs=x)
+        # self.input_y = tf.placeholder(tf.int32, shape=[None])
+        self.anc_idx = tf.placeholder(tf.int32, shape=[None])
+        self.pos_idx = tf.placeholder(tf.int32, shape=[None])
+        self.neg_idx = tf.placeholder(tf.int32, shape=[None])
+
+        fea_batch = self.model(self.input_x)
+
+        # Get trplets
+        anc_idx, pos_idx, neg_idx = tf.py_func(self.get_triplet, [self.input_y], [tf.int64, tf.int64, tf.int64])
+        anc = tf.gather(fea_batch, anc_idx)
+        pos = tf.gather(fea_batch, pos_idx)
+        neg = tf.gather(fea_batch, neg_idx)
+
+        # Triplet loss fuction
+        d_pos = tf.reduce_sum(tf.square(anc - pos), -1)
+        d_neg = tf.reduce_sum(tf.square(anc - neg), -1)
+        loss = tf.maximum(0., self.margin + self.gamma_tr * d_pos - d_neg)
+        self.loss = tf.reduce_mean(loss)
+
+        # Inverse learning rate policy
+        learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
+        # train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss, global_step=self.global_step)
+        train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss)
+        self.sess.run(tf.global_variables_initializer())
 
     def clusters_init(self, indices):
         # initialize labels for input data given knn indices
+        start  = timeit.default_timer()
         labels = -np.ones(self.Ns, np.int)
         num_class = 0
         for i in range(self.Ns):
@@ -233,7 +329,7 @@ class joint_cluster_cnn():
                 labels[idx] = labels[cur_idx]
 
         self.Nc = num_class
-        self.logger.info('%.2f s, Nc is %d...', timeit.default_timer() - self.tic, self.Nc)
+        self.logger.info('%.2f s, Finish clusters initialization,init clusters is %d, consuming: %.2fs', timeit.default_timer() - self.tic, self.Nc,timeit.default_timer() - start)
         return labels
 
     def get_Dis(self, fea, k):
@@ -245,7 +341,36 @@ class joint_cluster_cnn():
         self.logger.info('%.2f s, Finished the calculation of Dis', timeit.default_timer() - self.tic)
 
         return sortedDis, indexDis
-
+    def get_asymA_fast(self,W, C):
+        Nc = len(C)
+        asymA = np.zeros((Nc, Nc))
+        W_row_collapsed = np.zeros((Nc, W.shape[1]))
+        W_col_collapsed = np.zeros((Nc, W.shape[1]))
+        for i in range(Nc):
+            W_row_collapsed[i] = np.sum(W[C[i]], 0, keepdims=False)
+            W_col_collapsed[i] = np.sum(W[:, C[i]], 1, keepdims=False)
+        collapsed_W = W_row_collapsed * W_col_collapsed
+        for i in range(Nc):
+            asymA[:, i] = np.sum(collapsed_W[:, C[i]], 1) / math.pow(
+                        np.size(C[i], 0), 2)
+        np.fill_diagonal(asymA,0)
+        return asymA
+    def get_asymA_slow(self,W,C):
+        Nc = len(C)
+        asymA = np.zeros((Nc, Nc))
+        for i in range(Nc):
+            #self.logger.info('%.2f s, Calculating A..., i: %d', timeit.default_timer() - self.tic, i)
+            for j in range(i):
+                if np.size(C[j], 0) != 0:
+                    # asymA[i, j] = np.dot(np.sum(W[C[i], :][:, C[j]], 0), np.sum(W[C[j], :][:, C[i]], 1))  # A(Ci -> Cj)
+                    asymA[i, j] = np.dot(np.sum(W[np.meshgrid(C[i], C[j],indexing='ij')], 0), np.sum(W[np.meshgrid(C[j], C[i],indexing='ij')], 1)) / math.pow(
+                        np.size(C[j], 0), 2)  # A(Ci -> Cj)
+                if np.size(C[i], 0) != 0:
+                    # asymA[j, i] = np.dot(np.sum(W[C[j], :][:, C[i]], 0), np.sum(W[C[i], :][:, C[j]], 1))  # A(Cj -> Ci)
+                    asymA[j, i] = np.dot(np.sum(W[np.meshgrid(C[j], C[i],indexing='ij')], 0), np.sum(W[np.meshgrid(C[i], C[j],indexing='ij')], 1)) / math.pow(
+                        np.size(C[i], 0), 2)  # A(Cj -> Ci)
+                # A[i, j] = asymA[i, j]/math.pow(np.size(C[j], 0), 2) + asymA[j, i]/ math.pow(np.size(C[i], 0), 2)
+        return asymA
     def get_A(self, fea, sortedDis, indexDis, C):
         # Calculate W
         sortedDis = np.power(sortedDis, 2)
@@ -256,23 +381,11 @@ class joint_cluster_cnn():
         self.logger.info('%.2f s, Finished the calculation of W, sigma:%f', timeit.default_timer() - self.tic, np.sqrt(sig2))
 
         # Calculate A
-        asymA = np.zeros((self.Nc, self.Nc))
-        A = np.zeros((self.Nc, self.Nc))
-        for i in range(self.Nc):
-            self.logger.info('%.2f s, Calculating A..., i: %d', timeit.default_timer() - self.tic, i)
-            for j in range(i):
-                if np.size(C[j], 0) != 0:
-                    # asymA[i, j] = np.dot(np.sum(W[C[i], :][:, C[j]], 0), np.sum(W[C[j], :][:, C[i]], 1))  # A(Ci -> Cj)
-                    asymA[i, j] = np.dot(np.sum(W[C[i], :][:, C[j]], 0), np.sum(W[C[j], :][:, C[i]], 1)) / math.pow(
-                        np.size(C[j], 0), 2)  # A(Ci -> Cj)
-                if np.size(C[i], 0) != 0:
-                    # asymA[j, i] = np.dot(np.sum(W[C[j], :][:, C[i]], 0), np.sum(W[C[i], :][:, C[j]], 1))  # A(Cj -> Ci)
-                    asymA[j, i] = np.dot(np.sum(W[C[j], :][:, C[i]], 0), np.sum(W[C[i], :][:, C[j]], 1)) / math.pow(
-                        np.size(C[i], 0), 2)  # A(Cj -> Ci)
-                # A[i, j] = asymA[i, j]/math.pow(np.size(C[j], 0), 2) + asymA[j, i]/ math.pow(np.size(C[i], 0), 2)
-                A[i, j] = asymA[i, j] + asymA[j, i]
-                A[j, i] = A[i, j]
-
+        start = timeit.default_timer()
+        self.logger.info('%.2f s, Calculating A...',start - self.tic)
+        asymA = self.get_asymA_fast(W,C)
+        A = asymA + asymA.T
+        self.logger.info('%.2f s, Finishing  calculating A...,Consuming: %.2fs', timeit.default_timer() - self.tic, timeit.default_timer() - start)
         # Assert whether there are some self-contained clusters
         num_fea = np.size(fea, 1)
         if self.Nc > 20 * self.K:
@@ -420,21 +533,29 @@ class joint_cluster_cnn():
         for i in range(len(c)):
             labels_pre_new[labels_pre == unilabel_pre[c[i][1]]] = unilabel_gt[c[i][0]]
         AC = float(np.count_nonzero( labels_gt == labels_pre_new)) / self.Ns
-
-        pr_gt = np.sum(G, 1)*1.0/self.Ns
-        pr_pre = np.sum(G, 0)*1.0/self.Ns
-
-        # Entropy
-        H_gt = - np.sum(pr_gt * np.log(pr_gt))
-        H_pre = - np.sum(pr_pre * np.log(pr_pre))
-        H_gp = -np.sum(np.multiply(G*1.0/self.Ns, np.log(G*1.0/self.Ns+1e-10)))  # Joint entropy
-
-        MI = H_gt + H_pre - H_gp
-        NMI = MI / np.sqrt(H_gt * H_pre)
-
+        #NMI = normalized_mutual_info_score(labels_gt, labels_pre)
+        # pr_gt = np.sum(G, 1)*1.0/self.Ns
+        # pr_pre = np.sum(G, 0)*1.0/self.Ns
+        #
+        # # Entropy
+        # H_gt = - np.sum(pr_gt * np.log(pr_gt))
+        # H_pre = - np.sum(pr_pre * np.log(pr_pre))
+        # H_gp = -np.sum(np.multiply(G*1.0/self.Ns, np.log(G*1.0/self.Ns+1e-10)))  # Joint entropy
+        #
+        # MI = H_gt + H_pre - H_gp
+        # NMI = MI / np.sqrt(H_gt * H_pre)
+        NMI = normalized_mutual_info_score(self.gnd, labels_pre)
         self.logger.info('%.2f s, AC: %f, NMI: %f', timeit.default_timer() - self.tic, AC, NMI)
         return AC, NMI
 
+
+    def evaluation2(self, labels_pre):
+        self.logger.info('Evaluatiing')
+        #AC = bestMap(self.gnd,labels_pre)
+        NMI = normalized_mutual_info_score(self.gnd, labels_pre)
+        self.logger.info('%.2f s, NMI: %f', timeit.default_timer() - self.tic, NMI)
+        return NMI
+    
     def get_triplet(self, labels_batch):
 
         num_sam = np.size(labels_batch)
@@ -449,14 +570,14 @@ class joint_cluster_cnn():
         num_triplet = 0
         for i in range(nclusters):
             num_Ci = np.size(C_batch[i])
-            num_triplet += num_Ci * (num_Ci - 1) * num_neg_sampling / 2
+            num_triplet += num_Ci * (num_Ci - 1) * num_neg_sampling // 2
 
         if num_triplet == 0:
             return 0,0,0
 
-        anc = np.zeros(num_triplet, np.int64)
-        pos = np.zeros(num_triplet, np.int64)
-        neg = np.zeros(num_triplet, np.int64)
+        anc = np.zeros(num_triplet, np.int32)
+        pos = np.zeros(num_triplet, np.int32)
+        neg = np.zeros(num_triplet, np.int32)
 
         id_triplet = 0
         for i in range(nclusters):
@@ -479,93 +600,123 @@ class joint_cluster_cnn():
 
         return anc, pos, neg
 
+    def preidct(self,images):
+
+        #Extract features, get the new feature representation
+        fea = []
+        x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
+        fea_batch = self.model(x)
+        for i in range(self.num_batch):
+            if i != self.num_batch - 1:
+                batch = self.images[self.batch_size * i: self.batch_size * (i + 1), :]
+                fea.append(self.sess.run(fea_batch, feed_dict={x: batch}))
+            else:
+                batch = self.images[self.batch_size * i:, :]
+                fea.append(self.sess.run(fea_batch, feed_dict={x: batch}))
+            self.logger.info('%.2f s, Period: %d, batch: %d, feature extracting...',
+                             timeit.default_timer() - self.tic, self.p, i)
+        return np.concatenate(fea)
     def train(self, labels):
-        with tf.device('/cpu:0'):
+        x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
+        #y = tf.placeholder(tf.int32, shape=[None])
+        anc_idx = tf.placeholder(tf.int32,shape=[None])
+        pos_idx = tf.placeholder(tf.int32, shape=[None])
+        neg_idx = tf.placeholder(tf.int32, shape=[None])
 
-            x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
-            y = tf.placeholder(tf.float32, shape=[None, 1])
+        fea_batch = self.model(x)
 
-            fea_batch = self.model(x)
+        # Get trplets
+        #anc_idx, pos_idx, neg_idx = tf.py_func(self.get_triplet, [y], [tf.int64, tf.int64, tf.int64])
+        anc = tf.gather(fea_batch, anc_idx)
+        pos = tf.gather(fea_batch, pos_idx)
+        neg = tf.gather(fea_batch, neg_idx)
 
-            # Get trplets
-            anc_idx, pos_idx, neg_idx = tf.py_func(self.get_triplet, [y], [tf.int64, tf.int64, tf.int64])
-            anc = tf.gather(fea_batch, anc_idx)
-            pos = tf.gather(fea_batch, pos_idx)
-            neg = tf.gather(fea_batch, neg_idx)
+        # Triplet loss fuction
+        d_pos = tf.reduce_sum(tf.square(anc - pos), -1)
+        d_neg = tf.reduce_sum(tf.square(anc - neg), -1)
+        loss = tf.maximum(0., self.margin + self.gamma_tr * d_pos - d_neg)
+        loss = tf.reduce_mean(loss)
 
-            # Triplet loss fuction
-            d_pos = tf.reduce_sum(tf.square(anc - pos), -1)
-            d_neg = tf.reduce_sum(tf.square(anc - neg), -1)
-            loss = tf.maximum(0., self.margin + self.gamma_tr * d_pos - d_neg)
-            loss = tf.reduce_mean(loss)
+        # Inverse learning rate policy
+        learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
 
-            # Inverse learning rate policy
-            learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
-
-            # train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss, global_step=self.global_step)
-            train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss)
-            self.sess.run(tf.initialize_all_variables())
-            for e in range(self.epochs):
-                self.logger.info('%.2f s, Period: %d, epoch: %d, training...', timeit.default_timer() - self.tic, self.p, e)
-                index_rand = np.random.permutation(self.Ns)
-                for i in range(self.num_batch):
-                    if i != self.num_batch - 1:
-                        index = index_rand[self.batch_size * i: self.batch_size * (i + 1)]
-                        labels_batch = labels[index][:, None]
-                        batch = self.images[index, :]
-                    else:
-                        index = index_rand[self.batch_size * i: ]
-                        labels_batch = labels[index][:, None]
-                        batch = self.images[index]
-
-                    _, ln, triplet_loss, features = self.sess.run([train_step, learning_rate, loss, fea_batch],
-                                                                  feed_dict={x: batch, y: labels_batch})
-                    # print "fea_batch:", features
-                    self.iter_cnn += 1
-                    # inverse learning rate policy
-                    learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
-                    self.logger.info('%.2f s, Period: %d, epoch: %d, batch: %d, leaning rate: %f, triplet loss: %f',
-                                     timeit.default_timer() - self.tic, self.p, e, i, ln, triplet_loss)
-
-            self.logger.info('%.2f s, Period: %d, finished cnn training', timeit.default_timer() - self.tic, self.p)
-
-            # Extract features, get the new feature representation
-            num_fea = fea_batch.get_shape().as_list()[1]
-            fea = np.zeros((self.Ns, num_fea))
+        # train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss, global_step=self.global_step)
+        optimizer = tf.train.MomentumOptimizer(learning_rate, 0.9)
+        train_step = optimizer.minimize(loss)
+        self.sess.run(tf.global_variables_initializer())
+        for e in range(self.epochs):
+            start = timeit.default_timer()
+            self.logger.info('%.2f s, Period: %d, epoch: %d, training...', timeit.default_timer() - self.tic, self.p, e)
+            index_rand = np.random.permutation(self.Ns)
+            epoch_loss = 0
             for i in range(self.num_batch):
                 if i != self.num_batch - 1:
-                    batch = self.images[self.batch_size * i: self.batch_size * (i + 1), :]
-                    fea[self.batch_size * i: self.batch_size * (i + 1), :] = self.sess.run(fea_batch, feed_dict={x: batch})
+                    index = index_rand[self.batch_size * i: self.batch_size * (i + 1)]
+                    labels_batch = labels[index][:,None]
+                    batch = self.images[index, :]
                 else:
-                    batch = self.images[self.batch_size * i:, :]
-                    fea[self.batch_size * i:, :] = self.sess.run(fea_batch, feed_dict={x: batch})
-                self.logger.info('%.2f s, Period: %d, epoch: %d, batch: %d, feature extracting...',
-                                 timeit.default_timer() - self.tic, self.p, e, i)
-            self.logger.info('%.2f s, Period: %d, finished extraction of feature',
-                             timeit.default_timer() - self.tic, self.p)
-            self.p += 1
+                    index = index_rand[self.batch_size * i: ]
+                    labels_batch = labels[index][:,None]
+                    batch = self.images[index]
+                anc_idx_data, pos_idx_data, neg_idx_data = self.get_triplet(labels_batch)
+                if not np.shape(anc_idx_data) == 0:
+                    continue
+                _, ln, triplet_loss, features = self.sess.run([train_step, learning_rate, loss, fea_batch],
+                                                              feed_dict={x: batch,K.learning_phase():1,
+                                                                         anc_idx: anc_idx_data,pos_idx:pos_idx_data,neg_idx:neg_idx_data})
+                # print "fea_batch:", features
+                self.iter_cnn += 1
+                epoch_loss += triplet_loss
+                # inverse learning rate policy
+                learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
+                # self.logger.info('%.2f s, Period: %d, epoch: %d, batch: %d, leaning rate: %f, triplet loss: %f',
+                #                 timeit.default_timer() - self.tic, self.p, e, i, ln, triplet_loss)
+            self.logger.info('%.2f s, Epoch %d,leaning rate: %f, average loss: %f, consuming: %.2fs',
+                             timeit.default_timer() - self.tic, e,epoch_loss/self.num_batch,timeit.default_timer() - start)
+        self.logger.info('%.2f s, Period: %d, finished cnn training', timeit.default_timer() - self.tic, self.p)
 
-            return fea
+        # Extract features, get the new feature representation
+        # num_fea = fea_batch.get_shape().as_list()[1]
+        # fea = np.zeros((self.Ns, num_fea))
+        # for i in range(self.num_batch):
+        #     if i != self.num_batch - 1:
+        #         batch = self.images[self.batch_size * i: self.batch_size * (i + 1), :]
+        #         fea[self.batch_size * i: self.batch_size * (i + 1), :] = self.sess.run(fea_batch, feed_dict={x: batch})
+        #     else:
+        #         batch = self.images[self.batch_size * i:, :]
+        #         fea[self.batch_size * i:, :] = self.sess.run(fea_batch, feed_dict={x: batch})
+        #     self.logger.info('%.2f s, Period: %d, epoch: %d, batch: %d, feature extracting...',
+        #                      timeit.default_timer() - self.tic, self.p, e, i)
+        self.logger.info('%.2f s, Period: %d, finished extraction of feature',
+                         timeit.default_timer() - self.tic, self.p)
+        self.p += 1
 
     def recurrent_process(self, features, updateCNN):
 
-        fea = np.copy(features)
-        fea = normalize(fea, axis=1)
+        fea = normalize(features, axis=1)
 
         if updateCNN:
             sortedDis, indexDis = self.get_Dis(fea, 1)
+
             labels = self.clusters_init(indexDis)
-            self.evaluation(labels)
-            fea = self.train(labels)
+            self.evaluation2(labels)
+            self.train(labels)
+            #fea = self.preidct(self.images)
+            fea = self.model.predict(self.images,self.batch_size)
             sortedDis, indexDis = self.get_Dis(fea, self.Ks)
         else:
+            #with self.sess.as_default():
+            self.model.load_weights(self.weight_save_path.__str__())
+            # self.sess.run(tf.global_variables_initializer())
+            #fea = self.preidct(self.images)
+            fea = self.model.predict(fea,self.batch_size)
             sortedDis, indexDis = self.get_Dis(fea, self.Ks)
             labels = self.clusters_init(indexDis)
-            self.evaluation(labels)
+            self.evaluation2(labels)
 
         # sortedDis, indexDis = self.get_Dis(fea, self.Ks)
         # labels = self.clusters_init(indexDis)
-        # self.evaluation(labels)
+        # self.evaluation2(labels)
 
         C = self.get_C(labels)
         A, asymA, C = self.get_A(fea, sortedDis, indexDis, C)
@@ -582,9 +733,11 @@ class joint_cluster_cnn():
             # if updateCNN and self.Nc == self.K:
             if updateCNN and t == ts + Np:
                 labels = self.get_labels(C)
-                self.evaluation(labels)
+                self.evaluation2(labels)
 
-                fea = self.train(labels)
+                self.train(labels)
+                #fea = self.preidct(self.images)
+                fea = self.model.predict(self.images,self.batch_size)
                 fea = normalize(fea, axis=1)
 
                 # Update A based on the new feature representation
@@ -599,13 +752,22 @@ class joint_cluster_cnn():
     def run(self):
         C, fea = self.recurrent_process(self.images, self.updateCNN)
         labels = self.get_labels(C)
-        self.evaluation(labels)
+        acc_sf,nmi_sf = self.evaluation(labels)
         if self.updateCNN:
-            np.savez_compressed('features_'+ self.dataset +'.out', fea, 'features')
+            np.savez_compressed(self.output_path.joinpath('features_'+ self.dataset), fea, 'features')
             self.logger.info('%.2f s, deep representations saved', timeit.default_timer() - self.tic)
+            self.model.save_weights(self.weight_save_path.__str__())
 
-        if self.RC:
-            self.logger.info('%.2f s, begin to re-run clustering', timeit.default_timer() - self.tic)
+        if self.RC and self.updateCNN:
+            self.logger.info('%.2f s, begin to re-run clustering',  timeit.default_timer() - self.tic)
             C, fea = self.recurrent_process(fea, updateCNN = False)
             labels = self.get_labels(C)
-            self.evaluation(labels)
+            acc_sr, nmi_sr = self.evaluation2(labels)
+            print("Final num_clusters: %d,ACC_SR: %f,NMI_SR :%f" % (self.Nc,acc_sr, nmi_sr))
+
+        print("Final num_clusters: %d,ACC_SF: %f,NMI_SF :%f" % (self.Nc,acc_sf,nmi_sf))
+
+if __name__ == "__main__":
+    jule = Jule('mnist-test', RC = True, updateCNN = False, eta = 0.2)
+    jule.build_model()
+    jule.run()
