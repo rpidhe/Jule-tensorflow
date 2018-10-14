@@ -41,19 +41,23 @@ if __name__ == "__main__":
     #loss = tf.keras.losses.categorical_crossentropy
     accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(y_pred, 1,output_type=tf.int32), y_data), dtype=tf.float32))
     global_step = tf.get_variable("globe_step",shape=(),dtype=tf.int32)
-    learing_rate = tf.train.exponential_decay(
-        0.01,  # Base learning rate.
-        global_step,  # self.global_step,  # Current index into the dataset.
-        10,  # Decay step.
-        0.9,  # Decay rate.
-        staircase=False)
-
-    train_step = tf.train.AdamOptimizer(learing_rate).minimize(loss,global_step=global_step)
+    # learing_rate = tf.train.exponential_decay(
+    #     0.01,  # Base learning rate.
+    #     global_step,  # global_step,  # Current index into the dataset.
+    #     10,  # Decay step.
+    #     0.999,  # Decay rate.
+    #     staircase=False)
+    iter_cnn = 0
+    learning_rate = tf.Variable(0.01 * np.power(1 + 0.0001 * iter_cnn, - 0.75),
+                                     trainable=True, name="learning_rate")
+    optimizer = tf.train.AdamOptimizer(learning_rate)
+    train_step = optimizer.minimize(loss,global_step=global_step)
     iter = dataset.make_one_shot_iterator()
     next_data = iter.get_next()
     start = time.time()
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
+    decay = learning_rate.assign(learning_rate * 0.1,read_value=True)
     with tf.Session(config=config) as session:
         session.run(tf.global_variables_initializer())
         if os.path.exists(save_weight):
@@ -65,12 +69,17 @@ if __name__ == "__main__":
         #y_tmp_pred = model.predict(x_test)
         #right = np.equal(np.argmax(y_tmp_pred, 1), y_test).astype(np.float32)
        # print('model predication test accuracy %f' % np.mean(right))
+
         for i in range(FLAGS.iteration_step):
             x,y = session.run(next_data)
             feed_dict = {x_data: x, y_data: y}
-            _,loss_val,learning_phase,lr = session.run((train_step,loss,K.learning_phase(),learing_rate),feed_dict=feed_dict)
+            _,loss_val,learning_phase,lr = session.run((train_step,loss,K.learning_phase(),optimizer._lr),feed_dict=feed_dict)
             print("Curing learning rate:",lr)
+            iter_cnn += 200
+            session.run(
+                learning_rate.assign(0.01 * np.power(1 + 0.01 * iter_cnn, - 0.75)))
             if i%50 == 0:
+                print("Globe step:",global_step.value())
                 train_accuracy = session.run(accuracy,feed_dict=feed_dict)
                 print("Accuracy: %f,Loss: %f ,Learning Phase %s" % (train_accuracy,loss_val,learning_phase))
         model.save_weights(save_weight,save_format='h5')

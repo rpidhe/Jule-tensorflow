@@ -1,0 +1,9 @@
+10-12 11:11 root         INFO     0.00 s, Begin to extract dataset
+10-12 11:11 root         INFO     0.19 s, Finished extracting MNIST-test dataset
+10-12 11:11 root         INFO     0.69 s, Begin to fit neighbour graph
+10-12 11:11 root         INFO     0.98 s, Finished fitting, begin to calculate Dis
+10-12 11:11 root         INFO     32.08 s, Finished the calculation of Dis
+10-12 11:11 root         INFO     32.11 s, Finish clusters initialization,init clusters is 1762, consuming: 0.03s
+10-12 11:11 root         INFO     Evaluatiing
+10-12 11:11 root         INFO     32.11 s, NMI: 0.536085
+10-12 11:11 root         INFO     32.15 s, Period: 0, epoch: 0, training...

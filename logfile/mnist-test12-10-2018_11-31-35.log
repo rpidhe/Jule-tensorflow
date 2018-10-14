@@ -1,0 +1,4 @@
+10-12 11:31 root         INFO     0.00 s, Begin to extract dataset
+10-12 11:31 root         INFO     0.19 s, Finished extracting MNIST-test dataset
+10-12 11:31 root         INFO     0.67 s, Begin to fit neighbour graph
+10-12 11:31 root         INFO     0.96 s, Finished fitting, begin to calculate Dis

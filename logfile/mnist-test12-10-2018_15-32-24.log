@@ -1,0 +1,367 @@
+10-12 15:32 root         INFO     0.00 s, Begin to extract dataset
+10-12 15:32 root         INFO     0.21 s, Finished extracting MNIST-test dataset
+10-12 15:32 root         INFO     1.09 s, Begin to fit neighbour graph
+10-12 15:32 root         INFO     1.37 s, Finished fitting, begin to calculate Dis
+10-12 15:32 root         INFO     29.91 s, Finished the calculation of Dis
+10-12 15:32 root         INFO     29.96 s, Finish clusters initialization,init clusters is 1762, consuming: 0.05s
+10-12 15:32 root         INFO     Evaluatiing
+10-12 15:32 root         INFO     29.97 s, NMI: 0.536085
+10-12 15:32 root         INFO     30.01 s, Period: 0, epoch: 0, training...
+10-12 15:33 root         INFO     58.39 s, Epoch 0,leaning rate: 0.010000, average loss: 0.000000, consuming: 28.38s
+10-12 15:33 root         INFO     58.40 s, Period: 0, epoch: 1, training...
+10-12 15:33 root         INFO     59.20 s, Epoch 1,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.80s
+10-12 15:33 root         INFO     59.20 s, Period: 0, epoch: 2, training...
+10-12 15:33 root         INFO     59.99 s, Epoch 2,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.79s
+10-12 15:33 root         INFO     59.99 s, Period: 0, epoch: 3, training...
+10-12 15:33 root         INFO     60.78 s, Epoch 3,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.79s
+10-12 15:33 root         INFO     60.78 s, Period: 0, epoch: 4, training...
+10-12 15:33 root         INFO     61.57 s, Epoch 4,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.79s
+10-12 15:33 root         INFO     61.57 s, Period: 0, epoch: 5, training...
+10-12 15:33 root         INFO     62.33 s, Epoch 5,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.76s
+10-12 15:33 root         INFO     62.33 s, Period: 0, epoch: 6, training...
+10-12 15:33 root         INFO     62.90 s, Epoch 6,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     62.90 s, Period: 0, epoch: 7, training...
+10-12 15:33 root         INFO     63.47 s, Epoch 7,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     63.47 s, Period: 0, epoch: 8, training...
+10-12 15:33 root         INFO     64.04 s, Epoch 8,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     64.04 s, Period: 0, epoch: 9, training...
+10-12 15:33 root         INFO     64.61 s, Epoch 9,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     64.61 s, Period: 0, epoch: 10, training...
+10-12 15:33 root         INFO     65.18 s, Epoch 10,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     65.18 s, Period: 0, epoch: 11, training...
+10-12 15:33 root         INFO     65.74 s, Epoch 11,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.56s
+10-12 15:33 root         INFO     65.74 s, Period: 0, epoch: 12, training...
+10-12 15:33 root         INFO     66.31 s, Epoch 12,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.58s
+10-12 15:33 root         INFO     66.31 s, Period: 0, epoch: 13, training...
+10-12 15:33 root         INFO     66.88 s, Epoch 13,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     66.88 s, Period: 0, epoch: 14, training...
+10-12 15:33 root         INFO     67.45 s, Epoch 14,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     67.45 s, Period: 0, epoch: 15, training...
+10-12 15:33 root         INFO     68.02 s, Epoch 15,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     68.02 s, Period: 0, epoch: 16, training...
+10-12 15:33 root         INFO     68.59 s, Epoch 16,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     68.60 s, Period: 0, epoch: 17, training...
+10-12 15:33 root         INFO     69.16 s, Epoch 17,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     69.16 s, Period: 0, epoch: 18, training...
+10-12 15:33 root         INFO     69.72 s, Epoch 18,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.56s
+10-12 15:33 root         INFO     69.72 s, Period: 0, epoch: 19, training...
+10-12 15:33 root         INFO     70.29 s, Epoch 19,leaning rate: 0.010000, average loss: 0.000000, consuming: 0.57s
+10-12 15:33 root         INFO     70.29 s, Period: 0, finished cnn training
+10-12 15:33 root         INFO     70.29 s, Period: 0, finished extraction of feature
+10-12 15:33 root         INFO     71.46 s, Begin to fit neighbour graph
+10-12 15:33 root         INFO     71.53 s, Finished fitting, begin to calculate Dis
+10-12 15:33 root         INFO     74.76 s, Finished the calculation of Dis
+10-12 15:33 root         INFO     74.92 s, Finished the calculation of W, sigma:1059.903486
+10-12 15:33 root         INFO     74.92 s, Calculating A...
+10-12 15:33 root         INFO     76.78 s, Finishing  calculating A...,Consuming: 1.86s
+10-12 15:33 root         INFO     76.91 s, Fit the nearest neighbor graoh of clusters
+10-12 15:33 root         INFO     76.91 s, Calculation of A based on clusters is completed
+10-12 15:33 root         INFO     77.04 s, number of clusters: 1762, merge cluster 37 and 1311, loss: -43.708131
+10-12 15:33 root         INFO     77.11 s, number of clusters: 1761, merge cluster 746 and 1096, loss: -34.092367
+10-12 15:33 root         INFO     77.18 s, number of clusters: 1760, merge cluster 235 and 424, loss: -28.150982
+10-12 15:33 root         INFO     77.25 s, number of clusters: 1759, merge cluster 37 and 1014, loss: -20.684253
+10-12 15:33 root         INFO     77.32 s, number of clusters: 1758, merge cluster 293 and 511, loss: -20.338326
+10-12 15:33 root         INFO     77.39 s, number of clusters: 1757, merge cluster 142 and 246, loss: -19.504081
+10-12 15:33 root         INFO     77.46 s, number of clusters: 1756, merge cluster 235 and 1287, loss: -19.295106
+10-12 15:33 root         INFO     77.53 s, number of clusters: 1755, merge cluster 37 and 1050, loss: -19.122386
+10-12 15:33 root         INFO     77.61 s, number of clusters: 1754, merge cluster 895 and 1275, loss: -15.935178
+10-12 15:33 root         INFO     77.68 s, number of clusters: 1753, merge cluster 46 and 299, loss: -15.678950
+10-12 15:33 root         INFO     77.75 s, number of clusters: 1752, merge cluster 243 and 1682, loss: -15.063367
+10-12 15:33 root         INFO     77.82 s, number of clusters: 1751, merge cluster 746 and 1312, loss: -14.718377
+10-12 15:33 root         INFO     77.89 s, number of clusters: 1750, merge cluster 133 and 1440, loss: -14.232666
+10-12 15:33 root         INFO     77.96 s, number of clusters: 1749, merge cluster 293 and 974, loss: -13.803553
+10-12 15:33 root         INFO     78.04 s, number of clusters: 1748, merge cluster 2 and 397, loss: -13.143159
+10-12 15:33 root         INFO     78.11 s, number of clusters: 1747, merge cluster 320 and 326, loss: -12.892906
+10-12 15:33 root         INFO     78.18 s, number of clusters: 1746, merge cluster 132 and 1075, loss: -13.116081
+10-12 15:33 root         INFO     78.25 s, number of clusters: 1745, merge cluster 766 and 817, loss: -12.583134
+10-12 15:33 root         INFO     78.32 s, number of clusters: 1744, merge cluster 54 and 145, loss: -12.515384
+10-12 15:33 root         INFO     78.39 s, number of clusters: 1743, merge cluster 329 and 1590, loss: -12.348030
+10-12 15:33 root         INFO     78.46 s, number of clusters: 1742, merge cluster 6 and 1468, loss: -12.313849
+10-12 15:33 root         INFO     78.53 s, number of clusters: 1741, merge cluster 1046 and 1421, loss: -11.677768
+10-12 15:33 root         INFO     78.60 s, number of clusters: 1740, merge cluster 39 and 286, loss: -11.670684
+10-12 15:33 root         INFO     78.67 s, number of clusters: 1739, merge cluster 2 and 990, loss: -11.535628
+10-12 15:33 root         INFO     78.74 s, number of clusters: 1738, merge cluster 428 and 1565, loss: -11.351180
+10-12 15:33 root         INFO     78.81 s, number of clusters: 1737, merge cluster 1247 and 1612, loss: -11.230795
+10-12 15:33 root         INFO     78.88 s, number of clusters: 1736, merge cluster 296 and 750, loss: -10.692401
+10-12 15:33 root         INFO     78.95 s, number of clusters: 1735, merge cluster 353 and 1100, loss: -10.676779
+10-12 15:33 root         INFO     79.02 s, number of clusters: 1734, merge cluster 133 and 968, loss: -10.649625
+10-12 15:33 root         INFO     79.09 s, number of clusters: 1733, merge cluster 975 and 1274, loss: -10.508018
+10-12 15:33 root         INFO     79.16 s, number of clusters: 1732, merge cluster 142 and 1023, loss: -10.210578
+10-12 15:33 root         INFO     79.23 s, number of clusters: 1731, merge cluster 142 and 168, loss: -11.429080
+10-12 15:33 root         INFO     79.30 s, number of clusters: 1730, merge cluster 40 and 164, loss: -9.943780
+10-12 15:33 root         INFO     79.37 s, number of clusters: 1729, merge cluster 576 and 895, loss: -9.863284
+10-12 15:33 root         INFO     79.44 s, number of clusters: 1728, merge cluster 696 and 832, loss: -9.665037
+10-12 15:33 root         INFO     79.51 s, number of clusters: 1727, merge cluster 185 and 1396, loss: -9.580313
+10-12 15:33 root         INFO     79.58 s, number of clusters: 1726, merge cluster 237 and 284, loss: -9.260434
+10-12 15:33 root         INFO     79.65 s, number of clusters: 1725, merge cluster 353 and 1311, loss: -9.158064
+10-12 15:33 root         INFO     79.71 s, number of clusters: 1724, merge cluster 508 and 1219, loss: -9.072351
+10-12 15:33 root         INFO     79.78 s, number of clusters: 1723, merge cluster 181 and 1513, loss: -8.904403
+10-12 15:33 root         INFO     79.85 s, number of clusters: 1722, merge cluster 181 and 1155, loss: -9.041843
+10-12 15:33 root         INFO     79.92 s, number of clusters: 1721, merge cluster 491 and 1328, loss: -8.784713
+10-12 15:33 root         INFO     79.99 s, number of clusters: 1720, merge cluster 6 and 1277, loss: -8.778282
+10-12 15:33 root         INFO     80.06 s, number of clusters: 1719, merge cluster 928 and 1301, loss: -8.700020
+10-12 15:33 root         INFO     80.13 s, number of clusters: 1718, merge cluster 390 and 603, loss: -8.449507
+10-12 15:33 root         INFO     80.20 s, number of clusters: 1717, merge cluster 305 and 696, loss: -8.280476
+10-12 15:33 root         INFO     80.26 s, number of clusters: 1716, merge cluster 175 and 1013, loss: -7.926984
+10-12 15:33 root         INFO     80.33 s, number of clusters: 1715, merge cluster 555 and 1426, loss: -7.873545
+10-12 15:33 root         INFO     80.40 s, number of clusters: 1714, merge cluster 746 and 1369, loss: -7.534317
+10-12 15:33 root         INFO     80.47 s, number of clusters: 1713, merge cluster 293 and 1407, loss: -7.511500
+10-12 15:33 root         INFO     80.53 s, number of clusters: 1712, merge cluster 296 and 1544, loss: -7.832810
+10-12 15:33 root         INFO     80.60 s, number of clusters: 1711, merge cluster 508 and 961, loss: -7.493501
+10-12 15:33 root         INFO     80.67 s, number of clusters: 1710, merge cluster 508 and 1331, loss: -8.350486
+10-12 15:33 root         INFO     80.73 s, number of clusters: 1709, merge cluster 5 and 1403, loss: -7.486542
+10-12 15:33 root         INFO     80.80 s, number of clusters: 1708, merge cluster 1331 and 1375, loss: -7.463757
+10-12 15:33 root         INFO     80.87 s, number of clusters: 1707, merge cluster 957 and 1331, loss: -7.842854
+10-12 15:33 root         INFO     80.94 s, number of clusters: 1706, merge cluster 1538 and 1642, loss: -7.397616
+10-12 15:33 root         INFO     81.00 s, number of clusters: 1705, merge cluster 1362 and 1538, loss: -7.479939
+10-12 15:33 root         INFO     81.07 s, number of clusters: 1704, merge cluster 132 and 1284, loss: -7.374089
+10-12 15:33 root         INFO     81.14 s, number of clusters: 1703, merge cluster 137 and 887, loss: -7.373328
+10-12 15:33 root         INFO     81.21 s, number of clusters: 1702, merge cluster 186 and 352, loss: -7.269796
+10-12 15:33 root         INFO     81.28 s, number of clusters: 1701, merge cluster 278 and 1419, loss: -7.226888
+10-12 15:33 root         INFO     81.35 s, number of clusters: 1700, merge cluster 204 and 594, loss: -7.215228
+10-12 15:33 root         INFO     81.41 s, number of clusters: 1699, merge cluster 40 and 707, loss: -7.065694
+10-12 15:33 root         INFO     81.48 s, number of clusters: 1698, merge cluster 200 and 1494, loss: -6.929435
+10-12 15:33 root         INFO     81.55 s, number of clusters: 1697, merge cluster 232 and 952, loss: -6.896352
+10-12 15:33 root         INFO     81.61 s, number of clusters: 1696, merge cluster 686 and 1687, loss: -6.766014
+10-12 15:33 root         INFO     81.68 s, number of clusters: 1695, merge cluster 209 and 225, loss: -6.501398
+10-12 15:33 root         INFO     81.75 s, number of clusters: 1694, merge cluster 296 and 1190, loss: -6.403638
+10-12 15:33 root         INFO     81.82 s, number of clusters: 1693, merge cluster 296 and 504, loss: -7.136628
+10-12 15:33 root         INFO     81.88 s, number of clusters: 1692, merge cluster 621 and 1563, loss: -6.375081
+10-12 15:33 root         INFO     81.95 s, number of clusters: 1691, merge cluster 565 and 1478, loss: -6.259746
+10-12 15:33 root         INFO     82.02 s, number of clusters: 1690, merge cluster 329 and 1508, loss: -6.248072
+10-12 15:33 root         INFO     82.08 s, number of clusters: 1689, merge cluster 164 and 1348, loss: -6.170495
+10-12 15:33 root         INFO     82.15 s, number of clusters: 1688, merge cluster 626 and 697, loss: -6.124316
+10-12 15:33 root         INFO     82.22 s, number of clusters: 1687, merge cluster 39 and 166, loss: -6.121092
+10-12 15:33 root         INFO     82.28 s, number of clusters: 1686, merge cluster 744 and 801, loss: -6.090133
+10-12 15:33 root         INFO     82.35 s, number of clusters: 1685, merge cluster 201 and 408, loss: -6.075114
+10-12 15:33 root         INFO     82.41 s, number of clusters: 1684, merge cluster 629 and 1230, loss: -6.219489
+10-12 15:33 root         INFO     82.48 s, number of clusters: 1683, merge cluster 101 and 1527, loss: -6.072776
+10-12 15:33 root         INFO     82.55 s, number of clusters: 1682, merge cluster 186 and 1049, loss: -6.027657
+10-12 15:33 root         INFO     82.61 s, number of clusters: 1681, merge cluster 277 and 981, loss: -5.953985
+10-12 15:33 root         INFO     82.68 s, number of clusters: 1680, merge cluster 38 and 472, loss: -5.899753
+10-12 15:33 root         INFO     82.74 s, number of clusters: 1679, merge cluster 428 and 1308, loss: -5.876251
+10-12 15:33 root         INFO     82.81 s, number of clusters: 1678, merge cluster 428 and 1566, loss: -6.132344
+10-12 15:33 root         INFO     82.88 s, number of clusters: 1677, merge cluster 1214 and 1266, loss: -5.813681
+10-12 15:33 root         INFO     82.94 s, number of clusters: 1676, merge cluster 119 and 1546, loss: -5.747737
+10-12 15:33 root         INFO     83.01 s, number of clusters: 1675, merge cluster 272 and 1262, loss: -5.704353
+10-12 15:33 root         INFO     83.07 s, number of clusters: 1674, merge cluster 834 and 1242, loss: -5.647354
+10-12 15:33 root         INFO     83.14 s, number of clusters: 1673, merge cluster 156 and 548, loss: -5.624623
+10-12 15:33 root         INFO     83.20 s, number of clusters: 1672, merge cluster 982 and 1604, loss: -5.557115
+10-12 15:33 root         INFO     83.27 s, number of clusters: 1671, merge cluster 6 and 42, loss: -5.542700
+10-12 15:33 root         INFO     83.33 s, number of clusters: 1670, merge cluster 150 and 712, loss: -5.449601
+10-12 15:33 root         INFO     83.40 s, number of clusters: 1669, merge cluster 37 and 960, loss: -5.449356
+10-12 15:33 root         INFO     83.46 s, number of clusters: 1668, merge cluster 37 and 388, loss: -5.990926
+10-12 15:33 root         INFO     83.53 s, number of clusters: 1667, merge cluster 37 and 1173, loss: -6.033367
+10-12 15:33 root         INFO     83.59 s, number of clusters: 1666, merge cluster 145 and 1378, loss: -5.445901
+10-12 15:33 root         INFO     83.66 s, number of clusters: 1665, merge cluster 698 and 1428, loss: -5.440365
+10-12 15:33 root         INFO     83.72 s, number of clusters: 1664, merge cluster 605 and 1098, loss: -5.427832
+10-12 15:33 root         INFO     83.79 s, number of clusters: 1663, merge cluster 1288 and 1391, loss: -5.423073
+10-12 15:33 root         INFO     83.85 s, number of clusters: 1662, merge cluster 521 and 1143, loss: -5.392112
+10-12 15:33 root         INFO     83.92 s, number of clusters: 1661, merge cluster 521 and 1147, loss: -5.741741
+10-12 15:33 root         INFO     83.98 s, number of clusters: 1660, merge cluster 130 and 1074, loss: -5.376234
+10-12 15:33 root         INFO     84.05 s, number of clusters: 1659, merge cluster 441 and 793, loss: -5.354452
+10-12 15:33 root         INFO     84.12 s, number of clusters: 1658, merge cluster 574 and 1540, loss: -5.347858
+10-12 15:33 root         INFO     84.19 s, number of clusters: 1657, merge cluster 794 and 1471, loss: -5.263631
+10-12 15:33 root         INFO     84.25 s, number of clusters: 1656, merge cluster 794 and 882, loss: -7.488497
+10-12 15:33 root         INFO     84.31 s, number of clusters: 1655, merge cluster 175 and 1326, loss: -5.209663
+10-12 15:33 root         INFO     84.38 s, number of clusters: 1654, merge cluster 492 and 1360, loss: -5.180981
+10-12 15:33 root         INFO     84.44 s, number of clusters: 1653, merge cluster 805 and 1088, loss: -5.173445
+10-12 15:33 root         INFO     84.51 s, number of clusters: 1652, merge cluster 766 and 1118, loss: -5.226981
+10-12 15:33 root         INFO     84.57 s, number of clusters: 1651, merge cluster 31 and 175, loss: -5.190653
+10-12 15:33 root         INFO     84.63 s, number of clusters: 1650, merge cluster 1362 and 1645, loss: -5.160099
+10-12 15:33 root         INFO     84.70 s, number of clusters: 1649, merge cluster 123 and 1063, loss: -5.111729
+10-12 15:33 root         INFO     84.76 s, number of clusters: 1648, merge cluster 129 and 1292, loss: -5.018032
+10-12 15:33 root         INFO     84.82 s, number of clusters: 1647, merge cluster 675 and 1247, loss: -5.008192
+10-12 15:33 root         INFO     84.89 s, number of clusters: 1646, merge cluster 1288 and 1557, loss: -4.999498
+10-12 15:33 root         INFO     84.95 s, number of clusters: 1645, merge cluster 164 and 1403, loss: -4.927914
+10-12 15:33 root         INFO     85.01 s, number of clusters: 1644, merge cluster 303 and 1604, loss: -4.851700
+10-12 15:33 root         INFO     85.08 s, number of clusters: 1643, merge cluster 246 and 303, loss: -7.507871
+10-12 15:33 root         INFO     85.14 s, number of clusters: 1642, merge cluster 873 and 1476, loss: -4.815243
+10-12 15:33 root         INFO     85.20 s, number of clusters: 1641, merge cluster 20 and 922, loss: -4.811374
+10-12 15:33 root         INFO     85.26 s, number of clusters: 1640, merge cluster 421 and 975, loss: -4.796931
+10-12 15:33 root         INFO     85.33 s, number of clusters: 1639, merge cluster 277 and 1636, loss: -4.768756
+10-12 15:33 root         INFO     85.39 s, number of clusters: 1638, merge cluster 1216 and 1493, loss: -4.713190
+10-12 15:33 root         INFO     85.45 s, number of clusters: 1637, merge cluster 753 and 1322, loss: -4.653053
+10-12 15:33 root         INFO     85.51 s, number of clusters: 1636, merge cluster 682 and 1214, loss: -4.650559
+10-12 15:33 root         INFO     85.57 s, number of clusters: 1635, merge cluster 380 and 1128, loss: -4.612350
+10-12 15:33 root         INFO     85.64 s, number of clusters: 1634, merge cluster 1037 and 1135, loss: -4.548841
+10-12 15:33 root         INFO     85.70 s, number of clusters: 1633, merge cluster 1186 and 1458, loss: -4.541598
+10-12 15:33 root         INFO     85.76 s, number of clusters: 1632, merge cluster 277 and 351, loss: -4.443656
+10-12 15:33 root         INFO     85.82 s, number of clusters: 1631, merge cluster 675 and 1140, loss: -4.417547
+10-12 15:33 root         INFO     85.89 s, number of clusters: 1630, merge cluster 251 and 1102, loss: -4.393266
+10-12 15:33 root         INFO     85.95 s, number of clusters: 1629, merge cluster 251 and 635, loss: -4.567189
+10-12 15:33 root         INFO     86.01 s, number of clusters: 1628, merge cluster 1288 and 1592, loss: -4.381580
+10-12 15:33 root         INFO     86.07 s, number of clusters: 1627, merge cluster 125 and 1032, loss: -4.371509
+10-12 15:33 root         INFO     86.14 s, number of clusters: 1626, merge cluster 125 and 1159, loss: -4.454532
+10-12 15:33 root         INFO     86.20 s, number of clusters: 1625, merge cluster 1362 and 1562, loss: -4.287585
+10-12 15:33 root         INFO     86.26 s, number of clusters: 1624, merge cluster 1081 and 1569, loss: -4.191605
+10-12 15:33 root         INFO     86.32 s, number of clusters: 1623, merge cluster 314 and 458, loss: -4.182005
+10-12 15:33 root         INFO     86.38 s, number of clusters: 1622, merge cluster 753 and 1244, loss: -4.169167
+10-12 15:33 root         INFO     86.44 s, number of clusters: 1621, merge cluster 193 and 919, loss: -4.154384
+10-12 15:33 root         INFO     86.51 s, number of clusters: 1620, merge cluster 688 and 1413, loss: -4.131598
+10-12 15:33 root         INFO     86.57 s, number of clusters: 1619, merge cluster 16 and 1270, loss: -4.061971
+10-12 15:33 root         INFO     86.63 s, number of clusters: 1618, merge cluster 143 and 1247, loss: -4.055344
+10-12 15:33 root         INFO     86.69 s, number of clusters: 1617, merge cluster 1308 and 1589, loss: -4.021582
+10-12 15:33 root         INFO     86.75 s, number of clusters: 1616, merge cluster 368 and 1354, loss: -4.012373
+10-12 15:33 root         INFO     86.81 s, number of clusters: 1615, merge cluster 14 and 1553, loss: -3.958174
+10-12 15:33 root         INFO     86.88 s, number of clusters: 1614, merge cluster 633 and 722, loss: -3.934234
+10-12 15:33 root         INFO     86.94 s, number of clusters: 1613, merge cluster 1065 and 1072, loss: -3.920797
+10-12 15:33 root         INFO     87.00 s, number of clusters: 1612, merge cluster 1065 and 1326, loss: -4.149853
+10-12 15:33 root         INFO     87.06 s, number of clusters: 1611, merge cluster 279 and 1377, loss: -3.831814
+10-12 15:33 root         INFO     87.12 s, number of clusters: 1610, merge cluster 721 and 1288, loss: -3.813129
+10-12 15:33 root         INFO     87.18 s, number of clusters: 1609, merge cluster 272 and 495, loss: -3.812112
+10-12 15:33 root         INFO     87.24 s, number of clusters: 1608, merge cluster 272 and 457, loss: -4.514034
+10-12 15:33 root         INFO     87.30 s, number of clusters: 1607, merge cluster 1102 and 1348, loss: -3.800261
+10-12 15:33 root         INFO     87.36 s, number of clusters: 1606, merge cluster 491 and 568, loss: -3.737727
+10-12 15:33 root         INFO     87.42 s, number of clusters: 1605, merge cluster 329 and 1177, loss: -3.694057
+10-12 15:33 root         INFO     87.48 s, number of clusters: 1604, merge cluster 89 and 491, loss: -3.676589
+10-12 15:33 root         INFO     87.54 s, number of clusters: 1603, merge cluster 1239 and 1451, loss: -3.672868
+10-12 15:33 root         INFO     87.61 s, number of clusters: 1602, merge cluster 224 and 289, loss: -3.643458
+10-12 15:33 root         INFO     87.67 s, number of clusters: 1601, merge cluster 104 and 636, loss: -3.619002
+10-12 15:33 root         INFO     87.73 s, number of clusters: 1600, merge cluster 95 and 1500, loss: -3.617100
+10-12 15:33 root         INFO     87.79 s, number of clusters: 1599, merge cluster 1126 and 1513, loss: -3.506123
+10-12 15:33 root         INFO     87.85 s, number of clusters: 1598, merge cluster 576 and 667, loss: -3.470382
+10-12 15:33 root         INFO     87.91 s, number of clusters: 1597, merge cluster 686 and 1504, loss: -3.404238
+10-12 15:33 root         INFO     87.97 s, number of clusters: 1596, merge cluster 205 and 233, loss: -3.368657
+10-12 15:33 root         INFO     88.03 s, number of clusters: 1595, merge cluster 37 and 70, loss: -3.340990
+10-12 15:33 root         INFO     88.09 s, number of clusters: 1594, merge cluster 185 and 675, loss: -3.303528
+10-12 15:33 root         INFO     88.15 s, number of clusters: 1593, merge cluster 14 and 237, loss: -3.301182
+10-12 15:33 root         INFO     88.21 s, number of clusters: 1592, merge cluster 1393 and 1505, loss: -3.299265
+10-12 15:33 root         INFO     88.27 s, number of clusters: 1591, merge cluster 186 and 571, loss: -3.282521
+10-12 15:33 root         INFO     88.33 s, number of clusters: 1590, merge cluster 517 and 810, loss: -3.280877
+10-12 15:33 root         INFO     88.39 s, number of clusters: 1589, merge cluster 756 and 903, loss: -3.263874
+10-12 15:33 root         INFO     88.45 s, number of clusters: 1588, merge cluster 698 and 1453, loss: -3.263142
+10-12 15:33 root         INFO     88.51 s, number of clusters: 1587, merge cluster 200 and 1409, loss: -3.221481
+10-12 15:33 root         INFO     88.56 s, number of clusters: 1586, merge cluster 133 and 747, loss: -3.206544
+10-12 15:33 root         INFO     88.62 s, number of clusters: 1585, merge cluster 753 and 1483, loss: -3.188145
+10-12 15:33 root         INFO     88.68 s, number of clusters: 1584, merge cluster 5 and 373, loss: -3.180223
+10-12 15:33 root         INFO     88.74 s, number of clusters: 1583, merge cluster 735 and 850, loss: -3.142214
+10-12 15:33 root         INFO     88.80 s, number of clusters: 1582, merge cluster 1046 and 1424, loss: -3.132600
+10-12 15:33 root         INFO     88.86 s, number of clusters: 1581, merge cluster 401 and 503, loss: -3.092356
+10-12 15:33 root         INFO     88.92 s, number of clusters: 1580, merge cluster 1015 and 1297, loss: -3.077027
+10-12 15:33 root         INFO     88.98 s, number of clusters: 1579, merge cluster 129 and 182, loss: -3.127581
+10-12 15:33 root         INFO     89.04 s, number of clusters: 1578, merge cluster 730 and 890, loss: -3.072274
+10-12 15:33 root         INFO     89.09 s, number of clusters: 1577, merge cluster 354 and 1073, loss: -3.067466
+10-12 15:33 root         INFO     89.15 s, number of clusters: 1576, merge cluster 918 and 1309, loss: -3.050748
+10-12 15:33 root         INFO     89.21 s, number of clusters: 1575, merge cluster 903 and 1028, loss: -3.046485
+10-12 15:33 root         INFO     89.27 s, number of clusters: 1574, merge cluster 230 and 1475, loss: -3.007962
+10-12 15:33 root         INFO     89.33 s, number of clusters: 1573, merge cluster 298 and 354, loss: -3.001125
+10-12 15:33 root         INFO     89.38 s, number of clusters: 1572, merge cluster 5 and 1175, loss: -2.992250
+10-12 15:33 root         INFO     89.44 s, number of clusters: 1571, merge cluster 6 and 1062, loss: -2.988450
+10-12 15:33 root         INFO     89.50 s, number of clusters: 1570, merge cluster 989 and 1317, loss: -2.965097
+10-12 15:33 root         INFO     89.56 s, number of clusters: 1569, merge cluster 107 and 222, loss: -2.960818
+10-12 15:33 root         INFO     89.62 s, number of clusters: 1568, merge cluster 353 and 1014, loss: -2.950248
+10-12 15:33 root         INFO     89.67 s, number of clusters: 1567, merge cluster 737 and 1042, loss: -2.933389
+10-12 15:33 root         INFO     89.73 s, number of clusters: 1566, merge cluster 132 and 557, loss: -2.931025
+10-12 15:33 root         INFO     89.79 s, number of clusters: 1565, merge cluster 561 and 777, loss: -2.911946
+10-12 15:33 root         INFO     89.85 s, number of clusters: 1564, merge cluster 459 and 1122, loss: -2.895086
+10-12 15:33 root         INFO     89.91 s, number of clusters: 1563, merge cluster 104 and 1278, loss: -2.861085
+10-12 15:33 root         INFO     89.96 s, number of clusters: 1562, merge cluster 576 and 1365, loss: -2.831370
+10-12 15:33 root         INFO     90.02 s, number of clusters: 1561, merge cluster 1393 and 1502, loss: -2.824565
+10-12 15:33 root         INFO     90.08 s, number of clusters: 1560, merge cluster 50 and 516, loss: -2.818862
+10-12 15:33 root         INFO     90.14 s, number of clusters: 1559, merge cluster 193 and 712, loss: -2.797488
+10-12 15:33 root         INFO     90.20 s, number of clusters: 1558, merge cluster 247 and 1257, loss: -2.796580
+10-12 15:33 root         INFO     90.25 s, number of clusters: 1557, merge cluster 253 and 767, loss: -2.761761
+10-12 15:33 root         INFO     90.31 s, number of clusters: 1556, merge cluster 253 and 754, loss: -3.085792
+10-12 15:33 root         INFO     90.37 s, number of clusters: 1555, merge cluster 428 and 1385, loss: -2.781459
+10-12 15:33 root         INFO     90.43 s, number of clusters: 1554, merge cluster 277 and 1181, loss: -2.748551
+10-12 15:33 root         INFO     90.48 s, number of clusters: 1553, merge cluster 604 and 735, loss: -2.747107
+10-12 15:33 root         INFO     90.54 s, number of clusters: 1552, merge cluster 508 and 643, loss: -2.741353
+10-12 15:33 root         INFO     90.60 s, number of clusters: 1551, merge cluster 508 and 639, loss: -3.225682
+10-12 15:33 root         INFO     90.65 s, number of clusters: 1550, merge cluster 1250 and 1406, loss: -2.721514
+10-12 15:33 root         INFO     90.71 s, number of clusters: 1549, merge cluster 175 and 459, loss: -2.719624
+10-12 15:33 root         INFO     90.77 s, number of clusters: 1548, merge cluster 987 and 1242, loss: -2.713929
+10-12 15:33 root         INFO     90.83 s, number of clusters: 1547, merge cluster 950 and 1382, loss: -2.713068
+10-12 15:33 root         INFO     90.88 s, number of clusters: 1546, merge cluster 130 and 978, loss: -2.703415
+10-12 15:33 root         INFO     90.94 s, number of clusters: 1545, merge cluster 190 and 1223, loss: -2.696119
+10-12 15:33 root         INFO     91.00 s, number of clusters: 1544, merge cluster 29 and 134, loss: -2.692307
+10-12 15:33 root         INFO     91.05 s, number of clusters: 1543, merge cluster 243 and 538, loss: -2.674558
+10-12 15:33 root         INFO     91.11 s, number of clusters: 1542, merge cluster 398 and 1331, loss: -2.672633
+10-12 15:33 root         INFO     91.17 s, number of clusters: 1541, merge cluster 319 and 746, loss: -2.664818
+10-12 15:33 root         INFO     91.22 s, number of clusters: 1540, merge cluster 1182 and 1220, loss: -2.664394
+10-12 15:33 root         INFO     91.28 s, number of clusters: 1539, merge cluster 593 and 965, loss: -2.663247
+10-12 15:33 root         INFO     91.34 s, number of clusters: 1538, merge cluster 604 and 746, loss: -2.662035
+10-12 15:33 root         INFO     91.39 s, number of clusters: 1537, merge cluster 1156 and 1186, loss: -2.642965
+10-12 15:33 root         INFO     91.45 s, number of clusters: 1536, merge cluster 1156 and 1248, loss: -2.954128
+10-12 15:33 root         INFO     91.51 s, number of clusters: 1535, merge cluster 845 and 1511, loss: -2.639919
+10-12 15:33 root         INFO     91.56 s, number of clusters: 1534, merge cluster 1430 and 1450, loss: -2.636745
+10-12 15:33 root         INFO     91.62 s, number of clusters: 1533, merge cluster 230 and 505, loss: -2.622305
+10-12 15:33 root         INFO     91.67 s, number of clusters: 1532, merge cluster 934 and 1476, loss: -2.615487
+10-12 15:33 root         INFO     91.73 s, number of clusters: 1531, merge cluster 6 and 644, loss: -2.609451
+10-12 15:33 root         INFO     91.78 s, number of clusters: 1530, merge cluster 201 and 1174, loss: -2.600900
+10-12 15:33 root         INFO     91.84 s, number of clusters: 1529, merge cluster 79 and 197, loss: -2.596602
+10-12 15:33 root         INFO     91.90 s, number of clusters: 1528, merge cluster 1108 and 1216, loss: -2.584035
+10-12 15:33 root         INFO     91.95 s, number of clusters: 1527, merge cluster 351 and 740, loss: -2.575949
+10-12 15:33 root         INFO     92.01 s, number of clusters: 1526, merge cluster 104 and 654, loss: -2.574732
+10-12 15:33 root         INFO     92.06 s, number of clusters: 1525, merge cluster 116 and 1476, loss: -2.564137
+10-12 15:33 root         INFO     92.12 s, number of clusters: 1524, merge cluster 524 and 576, loss: -2.544673
+10-12 15:33 root         INFO     92.17 s, number of clusters: 1523, merge cluster 1099 and 1200, loss: -2.536939
+10-12 15:33 root         INFO     92.23 s, number of clusters: 1522, merge cluster 699 and 1073, loss: -2.513797
+10-12 15:33 root         INFO     92.28 s, number of clusters: 1521, merge cluster 150 and 1395, loss: -2.494549
+10-12 15:33 root         INFO     92.34 s, number of clusters: 1520, merge cluster 360 and 1385, loss: -2.493745
+10-12 15:33 root         INFO     92.39 s, number of clusters: 1519, merge cluster 101 and 392, loss: -2.488110
+10-12 15:33 root         INFO     92.45 s, number of clusters: 1518, merge cluster 193 and 1002, loss: -2.472384
+10-12 15:33 root         INFO     92.50 s, number of clusters: 1517, merge cluster 351 and 1276, loss: -2.457589
+10-12 15:33 root         INFO     92.56 s, number of clusters: 1516, merge cluster 31 and 91, loss: -2.454557
+10-12 15:33 root         INFO     92.61 s, number of clusters: 1515, merge cluster 612 and 1052, loss: -2.440733
+10-12 15:33 root         INFO     92.67 s, number of clusters: 1514, merge cluster 873 and 1025, loss: -2.395802
+10-12 15:33 root         INFO     92.72 s, number of clusters: 1513, merge cluster 237 and 1272, loss: -2.375281
+10-12 15:33 root         INFO     92.77 s, number of clusters: 1512, merge cluster 107 and 1367, loss: -2.373331
+10-12 15:33 root         INFO     92.83 s, number of clusters: 1511, merge cluster 590 and 794, loss: -2.365373
+10-12 15:33 root         INFO     92.88 s, number of clusters: 1510, merge cluster 534 and 1295, loss: -2.363978
+10-12 15:33 root         INFO     92.94 s, number of clusters: 1509, merge cluster 224 and 863, loss: -2.355926
+10-12 15:33 root         INFO     92.99 s, number of clusters: 1508, merge cluster 794 and 897, loss: -2.318419
+10-12 15:33 root         INFO     93.04 s, number of clusters: 1507, merge cluster 730 and 917, loss: -2.316291
+10-12 15:33 root         INFO     93.10 s, number of clusters: 1506, merge cluster 699 and 762, loss: -2.312870
+10-12 15:33 root         INFO     93.15 s, number of clusters: 1505, merge cluster 699 and 1463, loss: -3.003104
+10-12 15:33 root         INFO     93.21 s, number of clusters: 1504, merge cluster 139 and 393, loss: -2.299659
+10-12 15:33 root         INFO     93.26 s, number of clusters: 1503, merge cluster 183 and 348, loss: -2.298910
+10-12 15:33 root         INFO     93.31 s, number of clusters: 1502, merge cluster 84 and 598, loss: -2.280391
+10-12 15:33 root         INFO     93.37 s, number of clusters: 1501, merge cluster 137 and 838, loss: -2.258318
+10-12 15:33 root         INFO     93.42 s, number of clusters: 1500, merge cluster 2 and 521, loss: -2.256884
+10-12 15:33 root         INFO     93.47 s, number of clusters: 1499, merge cluster 2 and 56, loss: -2.378656
+10-12 15:33 root         INFO     93.53 s, number of clusters: 1498, merge cluster 221 and 682, loss: -2.248431
+10-12 15:33 root         INFO     93.58 s, number of clusters: 1497, merge cluster 250 and 732, loss: -2.237229
+10-12 15:33 root         INFO     93.63 s, number of clusters: 1496, merge cluster 156 and 235, loss: -2.230833
+10-12 15:33 root         INFO     93.69 s, number of clusters: 1495, merge cluster 110 and 657, loss: -2.228808
+10-12 15:33 root         INFO     93.74 s, number of clusters: 1494, merge cluster 6 and 684, loss: -2.219213
+10-12 15:33 root         INFO     93.79 s, number of clusters: 1493, merge cluster 380 and 791, loss: -2.215544
+10-12 15:33 root         INFO     93.85 s, number of clusters: 1492, merge cluster 950 and 1025, loss: -2.265229
+10-12 15:33 root         INFO     93.90 s, number of clusters: 1491, merge cluster 621 and 897, loss: -2.300233
+10-12 15:33 root         INFO     93.95 s, number of clusters: 1490, merge cluster 46 and 477, loss: -2.215280
+10-12 15:33 root         INFO     94.01 s, number of clusters: 1489, merge cluster 353 and 1061, loss: -2.210657
+10-12 15:33 root         INFO     94.06 s, number of clusters: 1488, merge cluster 633 and 1201, loss: -2.195346
+10-12 15:33 root         INFO     94.11 s, number of clusters: 1487, merge cluster 351 and 863, loss: -2.189477
+10-12 15:33 root         INFO     94.17 s, number of clusters: 1486, merge cluster 1195 and 1411, loss: -2.180099
+10-12 15:33 root         INFO     94.22 s, number of clusters: 1485, merge cluster 78 and 393, loss: -2.162523
+10-12 15:33 root         INFO     94.27 s, number of clusters: 1484, merge cluster 1117 and 1142, loss: -2.155984
+10-12 15:33 root         INFO     94.33 s, number of clusters: 1483, merge cluster 129 and 312, loss: -2.155297
+10-12 15:33 root         INFO     94.38 s, number of clusters: 1482, merge cluster 608 and 700, loss: -2.154372
+10-12 15:33 root         INFO     94.43 s, number of clusters: 1481, merge cluster 33 and 222, loss: -2.146776
+10-12 15:33 root         INFO     94.48 s, number of clusters: 1480, merge cluster 885 and 1307, loss: -2.139067
+10-12 15:33 root         INFO     94.54 s, number of clusters: 1479, merge cluster 329 and 1186, loss: -2.135419
+10-12 15:33 root         INFO     94.59 s, number of clusters: 1478, merge cluster 353 and 1062, loss: -2.126668
+10-12 15:33 root         INFO     94.65 s, number of clusters: 1477, merge cluster 353 and 1456, loss: -2.294571
+10-12 15:33 root         INFO     94.70 s, number of clusters: 1476, merge cluster 204 and 1024, loss: -2.116084
+10-12 15:33 root         INFO     94.75 s, number of clusters: 1475, merge cluster 230 and 429, loss: -2.112414
+10-12 15:33 root         INFO     94.81 s, number of clusters: 1474, merge cluster 347 and 668, loss: -2.108356
+10-12 15:33 root         INFO     94.86 s, number of clusters: 1473, merge cluster 49 and 64, loss: -2.093211
+10-12 15:33 root         INFO     94.92 s, number of clusters: 1472, merge cluster 59 and 130, loss: -2.088564
+10-12 15:33 root         INFO     94.97 s, number of clusters: 1471, merge cluster 535 and 756, loss: -2.084021
+10-12 15:33 root         INFO     95.03 s, number of clusters: 1470, merge cluster 546 and 1335, loss: -2.068609
+10-12 15:33 root         INFO     95.08 s, number of clusters: 1469, merge cluster 241 and 1187, loss: -2.068510
+10-12 15:33 root         INFO     95.13 s, number of clusters: 1468, merge cluster 745 and 1201, loss: -2.061817
+10-12 15:33 root         INFO     95.19 s, number of clusters: 1467, merge cluster 106 and 190, loss: -2.061302
+10-12 15:33 root         INFO     95.24 s, number of clusters: 1466, merge cluster 982 and 1031, loss: -2.060610
+10-12 15:33 root         INFO     95.29 s, number of clusters: 1465, merge cluster 403 and 725, loss: -2.046502
+10-12 15:33 root         INFO     95.35 s, number of clusters: 1464, merge cluster 205 and 342, loss: -2.046168
+10-12 15:33 root         INFO     95.40 s, number of clusters: 1463, merge cluster 631 and 742, loss: -2.040584
+10-12 15:33 root         INFO     95.45 s, number of clusters: 1462, merge cluster 227 and 925, loss: -2.027736
+10-12 15:33 root         INFO     95.50 s, number of clusters: 1461, merge cluster 573 and 1068, loss: -2.022828
+10-12 15:33 root         INFO     95.55 s, number of clusters: 1460, merge cluster 1102 and 1446, loss: -2.006268
+10-12 15:33 root         INFO     95.60 s, number of clusters: 1459, merge cluster 467 and 887, loss: -2.006041
+10-12 15:33 root         INFO     95.66 s, number of clusters: 1458, merge cluster 40 and 744, loss: -1.979138
+10-12 15:33 root         INFO     95.71 s, number of clusters: 1457, merge cluster 512 and 610, loss: -1.971499
+10-12 15:33 root         INFO     95.76 s, number of clusters: 1456, merge cluster 87 and 1181, loss: -1.971077
+10-12 15:33 root         INFO     95.81 s, number of clusters: 1455, merge cluster 129 and 426, loss: -1.962168
+10-12 15:33 root         INFO     95.86 s, number of clusters: 1454, merge cluster 407 and 429, loss: -1.957463

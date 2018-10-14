@@ -63,9 +63,10 @@ class Jule():
     alpha = 0  # -0.2
     epochs = 20  # 20
     batch_size = 100
-    gamma_tr = 2  # weight of positive pairs in weighted triplet loss.
+    gamma_tr = 1  # weight of positive pairs in weighted triplet loss.
     margin = 0.2  # margin for weighted triplet loss
-    num_nsampling = 20  # number of negative samples for each positive pairs to construct triplet.
+    num_nsampling = 10  # number of negative samples for each positive pairs to construct triplet.
+    max_archor = 10
     gamma_lr = 0.0001  # gamma for inverse learning rate policy
     power_lr = 0.75  # power for inverse learning rate policy
     p = 0
@@ -81,7 +82,7 @@ class Jule():
         self.eta = eta
         self.tic = timeit.default_timer()
         self.output_path = pathlib.Path("./results/" + dataset )
-
+        self.feature_save_path = self.output_path.joinpath('features_' + self.dataset +".npz")
         if not self.output_path.exists():
             self.output_path.mkdir()
         self.weight_save_path = self.output_path.joinpath("params/weight.h5")
@@ -213,17 +214,17 @@ class Jule():
 
         # Optimizer: set up a variable that's incremented once per batch and controls the learning rate decay.
         self.global_step = tf.Variable(0)
+        self.base_lr = 0.01
         # Decay once per epoch, using an exponential schedule starting at 0.01.
-        self.learning_rate = tf.train.exponential_decay(
-            0.01,  # Base learning rate.
-            self.iter_cnn, #self.global_step,  # Current index into the dataset.
-            self.Ns,  # Decay step.
-            0.99995,  # Decay rate.
-            staircase=False)
+        # self.learning_rate = tf.train.exponential_decay(
+        #     0.01,  # Base learning rate.
+        #     self.iter_cnn, #self.global_step,  # Current index into the dataset.
+        #     self.Ns,  # Decay step.
+        #     0.99995,  # Decay rate.
+        #     staircase=False)
     def build_model(self):
         # CNN
-        self.input_x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
-        inputs = keras_layers.Input(tensor=self.input_x)
+        inputs = keras_layers.Input(shape=[self.image_size1 * self.image_size2 * self.channel])
         x = keras_layers.Reshape([self.image_size1, self.image_size2, self.channel])(inputs)
         if 'mnist' in self.dataset: # 28 * 28
             x = conv_block(x,filters=50,kernel_size=(5, 5),strides=(1,1),padding="valid")
@@ -281,8 +282,10 @@ class Jule():
         x = keras_layers.Flatten()(x)
         print(x.get_shape())
         x = keras_layers.Dense(160)(x)
+
         self.model = tf.keras.Model(inputs=inputs,outputs=x)
         # self.input_y = tf.placeholder(tf.int32, shape=[None])
+        self.input_x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
         self.anc_idx = tf.placeholder(tf.int32, shape=[None])
         self.pos_idx = tf.placeholder(tf.int32, shape=[None])
         self.neg_idx = tf.placeholder(tf.int32, shape=[None])
@@ -290,21 +293,23 @@ class Jule():
         fea_batch = self.model(self.input_x)
 
         # Get trplets
-        anc_idx, pos_idx, neg_idx = tf.py_func(self.get_triplet, [self.input_y], [tf.int64, tf.int64, tf.int64])
-        anc = tf.gather(fea_batch, anc_idx)
-        pos = tf.gather(fea_batch, pos_idx)
-        neg = tf.gather(fea_batch, neg_idx)
+        #anc_idx, pos_idx, neg_idx = tf.py_func(self.get_triplet, [self.input_y], [tf.int64, tf.int64, tf.int64])
+        anc = tf.gather(fea_batch, self.anc_idx)
+        pos = tf.gather(fea_batch, self.pos_idx)
+        neg = tf.gather(fea_batch, self.neg_idx)
 
         # Triplet loss fuction
         d_pos = tf.reduce_sum(tf.square(anc - pos), -1)
         d_neg = tf.reduce_sum(tf.square(anc - neg), -1)
         loss = tf.maximum(0., self.margin + self.gamma_tr * d_pos - d_neg)
+        #loss = self.margin + self.gamma_tr * d_pos - d_neg
         self.loss = tf.reduce_mean(loss)
-
         # Inverse learning rate policy
-        learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
         # train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss, global_step=self.global_step)
-        train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss)
+        self.learning_rate = tf.Variable(self.base_lr * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr),trainable=False,name="learning_rate")
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate)
+        #self.optimizer = tf.train.MomentumOptimizer(self.learning_rate, 0.9)
+        self.train_step = self.optimizer.minimize(loss)
         self.sess.run(tf.global_variables_initializer())
 
     def clusters_init(self, indices):
@@ -582,14 +587,18 @@ class Jule():
         id_triplet = 0
         for i in range(nclusters):
             if np.size(C_batch[i]) > 1:
-                for m in range(np.size(C_batch[i])):
-                    for n in range(m+1, np.size(C_batch[i])):
+                if np.size(C_batch[i] > self.max_archor):
+                    selected = np.random.permutation(C_batch[i])[:self.max_archor]
+                else:
+                    selected = C_batch[i]
+                for m in range(np.size(selected)):
+                    for n in range(m+1, np.size(selected)):
                         is_choosed = np.zeros(num_sam, np.int8)
                         while True:
                             id_s = np.random.randint(num_sam)
                             if is_choosed[id_s] == 0 and labels_batch[id_s] != i:
-                                anc[id_triplet] = C_batch[i][m]
-                                pos[id_triplet] = C_batch[i][n]
+                                anc[id_triplet] = selected[m]
+                                pos[id_triplet] = selected[n]
                                 neg[id_triplet] = id_s
                                 is_choosed[id_s] = 1
                                 id_triplet += 1
@@ -617,38 +626,15 @@ class Jule():
                              timeit.default_timer() - self.tic, self.p, i)
         return np.concatenate(fea)
     def train(self, labels):
-        x = tf.placeholder(tf.float32, shape=[None, self.image_size1 * self.image_size2 * self.channel])
-        #y = tf.placeholder(tf.int32, shape=[None])
-        anc_idx = tf.placeholder(tf.int32,shape=[None])
-        pos_idx = tf.placeholder(tf.int32, shape=[None])
-        neg_idx = tf.placeholder(tf.int32, shape=[None])
-
-        fea_batch = self.model(x)
-
-        # Get trplets
-        #anc_idx, pos_idx, neg_idx = tf.py_func(self.get_triplet, [y], [tf.int64, tf.int64, tf.int64])
-        anc = tf.gather(fea_batch, anc_idx)
-        pos = tf.gather(fea_batch, pos_idx)
-        neg = tf.gather(fea_batch, neg_idx)
-
-        # Triplet loss fuction
-        d_pos = tf.reduce_sum(tf.square(anc - pos), -1)
-        d_neg = tf.reduce_sum(tf.square(anc - neg), -1)
-        loss = tf.maximum(0., self.margin + self.gamma_tr * d_pos - d_neg)
-        loss = tf.reduce_mean(loss)
-
-        # Inverse learning rate policy
-        learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
-
-        # train_step = tf.train.MomentumOptimizer(learning_rate, 0.9).minimize(loss, global_step=self.global_step)
-        optimizer = tf.train.MomentumOptimizer(learning_rate, 0.9)
-        train_step = optimizer.minimize(loss)
-        self.sess.run(tf.global_variables_initializer())
+        self.sess.run(tf.variables_initializer(self.optimizer.variables()))
         for e in range(self.epochs):
             start = timeit.default_timer()
             self.logger.info('%.2f s, Period: %d, epoch: %d, training...', timeit.default_timer() - self.tic, self.p, e)
             index_rand = np.random.permutation(self.Ns)
             epoch_loss = 0
+            lr = self.base_lr
+            triplet_loss = 0
+            tf.local_variables_initializer()
             for i in range(self.num_batch):
                 if i != self.num_batch - 1:
                     index = index_rand[self.batch_size * i: self.batch_size * (i + 1)]
@@ -659,20 +645,20 @@ class Jule():
                     labels_batch = labels[index][:,None]
                     batch = self.images[index]
                 anc_idx_data, pos_idx_data, neg_idx_data = self.get_triplet(labels_batch)
-                if not np.shape(anc_idx_data) == 0:
-                    continue
-                _, ln, triplet_loss, features = self.sess.run([train_step, learning_rate, loss, fea_batch],
-                                                              feed_dict={x: batch,K.learning_phase():1,
-                                                                         anc_idx: anc_idx_data,pos_idx:pos_idx_data,neg_idx:neg_idx_data})
+                if np.shape(anc_idx_data) !=():
+                    _, lr, triplet_loss = self.sess.run([self.train_step, self.learning_rate, self.loss],
+                                                              feed_dict={self.input_x: batch,K.learning_phase():1,
+                                                                         self.anc_idx: anc_idx_data,self.pos_idx:pos_idx_data,self.neg_idx:neg_idx_data})
                 # print "fea_batch:", features
                 self.iter_cnn += 1
                 epoch_loss += triplet_loss
                 # inverse learning rate policy
-                learning_rate = self.learning_rate * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)
+                self.sess.run(self.learning_rate.assign(self.base_lr * np.power(1 + self.gamma_lr * self.iter_cnn, - self.power_lr)))
                 # self.logger.info('%.2f s, Period: %d, epoch: %d, batch: %d, leaning rate: %f, triplet loss: %f',
                 #                 timeit.default_timer() - self.tic, self.p, e, i, ln, triplet_loss)
             self.logger.info('%.2f s, Epoch %d,leaning rate: %f, average loss: %f, consuming: %.2fs',
-                             timeit.default_timer() - self.tic, e,epoch_loss/self.num_batch,timeit.default_timer() - start)
+                             timeit.default_timer() - self.tic, e,lr,epoch_loss,timeit.default_timer() - start)
+
         self.logger.info('%.2f s, Period: %d, finished cnn training', timeit.default_timer() - self.tic, self.p)
 
         # Extract features, get the new feature representation
@@ -693,9 +679,8 @@ class Jule():
 
     def recurrent_process(self, features, updateCNN):
 
-        fea = normalize(features, axis=1)
-
         if updateCNN:
+            fea = normalize(features, axis=1)
             sortedDis, indexDis = self.get_Dis(fea, 1)
 
             labels = self.clusters_init(indexDis)
@@ -706,10 +691,11 @@ class Jule():
             sortedDis, indexDis = self.get_Dis(fea, self.Ks)
         else:
             #with self.sess.as_default():
-            self.model.load_weights(self.weight_save_path.__str__())
+            #self.model.load_weights(self.weight_save_path.__str__())
             # self.sess.run(tf.global_variables_initializer())
             #fea = self.preidct(self.images)
-            fea = self.model.predict(fea,self.batch_size)
+            #fea = self.model.predict(fea,self.batch_size)
+            fea = features
             sortedDis, indexDis = self.get_Dis(fea, self.Ks)
             labels = self.clusters_init(indexDis)
             self.evaluation2(labels)
@@ -750,24 +736,25 @@ class Jule():
         return C, fea
 
     def run(self):
-        C, fea = self.recurrent_process(self.images, self.updateCNN)
-        labels = self.get_labels(C)
-        acc_sf,nmi_sf = self.evaluation(labels)
         if self.updateCNN:
-            np.savez_compressed(self.output_path.joinpath('features_'+ self.dataset), fea, 'features')
-            self.logger.info('%.2f s, deep representations saved', timeit.default_timer() - self.tic)
-            self.model.save_weights(self.weight_save_path.__str__())
-
-        if self.RC and self.updateCNN:
-            self.logger.info('%.2f s, begin to re-run clustering',  timeit.default_timer() - self.tic)
-            C, fea = self.recurrent_process(fea, updateCNN = False)
+            C, fea = self.recurrent_process(self.images, self.updateCNN)
             labels = self.get_labels(C)
-            acc_sr, nmi_sr = self.evaluation2(labels)
-            print("Final num_clusters: %d,ACC_SR: %f,NMI_SR :%f" % (self.Nc,acc_sr, nmi_sr))
-
-        print("Final num_clusters: %d,ACC_SF: %f,NMI_SF :%f" % (self.Nc,acc_sf,nmi_sf))
+            acc_sf, nmi_sf = self.evaluation(labels)
+            if self.RC:
+                C, fea = self.recurrent_process(fea, updateCNN=False)
+                np.savez_compressed(self.output_path.joinpath('features_' + self.dataset), fea, 'features')
+                labels = self.get_labels(C)
+                acc_sr, nmi_sr = self.evaluation(labels)
+                print("Final num_clusters: %d,ACC_SR: %f,NMI_SR :%f" % (self.Nc, acc_sr, nmi_sr))
+            print("Final num_clusters: %d,ACC_SF: %f,NMI_SF :%f" % (self.Nc, acc_sf, nmi_sf))
+        else:
+            fea = np.load(self.feature_save_path)["arr_0"]
+            C, fea = self.recurrent_process(fea, updateCNN=False)
+            labels = self.get_labels(C)
+            acc_sr, nmi_sr = self.evaluation(labels)
+            print("Final num_clusters: %d,ACC_SR: %f,NMI_SR :%f" % (self.Nc, acc_sr, nmi_sr))
 
 if __name__ == "__main__":
-    jule = Jule('mnist-test', RC = True, updateCNN = False, eta = 0.2)
+    jule = Jule('mnist-test', RC = True, updateCNN = True, eta = 0.2)
     jule.build_model()
     jule.run()

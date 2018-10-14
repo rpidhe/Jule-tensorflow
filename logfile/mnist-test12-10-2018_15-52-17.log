@@ -1,0 +1,11 @@
+10-12 15:52 root         INFO     0.00 s, Begin to extract dataset
+10-12 15:52 root         INFO     0.21 s, Finished extracting MNIST-test dataset
+10-12 15:52 root         INFO     1.09 s, Begin to fit neighbour graph
+10-12 15:52 root         INFO     1.37 s, Finished fitting, begin to calculate Dis
+10-12 15:52 root         INFO     30.06 s, Finished the calculation of Dis
+10-12 15:52 root         INFO     30.12 s, Finish clusters initialization,init clusters is 1762, consuming: 0.06s
+10-12 15:52 root         INFO     Evaluatiing
+10-12 15:52 root         INFO     30.13 s, NMI: 0.536085
+10-12 15:52 root         INFO     30.17 s, Period: 0, epoch: 0, training...
+10-12 15:56 root         INFO     277.32 s, Epoch 0,leaning rate: 0.009926, average loss: 26704180036115074473336168775680.000000, consuming: 247.16s
+10-12 15:57 root         INFO     282.80 s, Period: 0, epoch: 1, training...

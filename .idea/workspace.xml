@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c02bdd13-dcbe-4562-8e7a-e3ecab923992" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/learning_rate.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/transfer_kmeans.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/results/mnist-test/features_mnist-test-margin0.2.npz" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/joint_cluster_cnn.py" beforeDir="false" afterPath="$PROJECT_DIR$/joint_cluster_cnn.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/learning_rate.py" beforeDir="false" afterPath="$PROJECT_DIR$/learning_rate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/mnist-test/features_mnist-test.npz" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/results/mnist-test/params/weights.h5" beforeDir="false" afterPath="$PROJECT_DIR$/results/mnist-test/params/weights_train_no_change.h5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/simple_weight.h5" beforeDir="false" afterPath="$PROJECT_DIR$/simple_weight.h5" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -27,27 +29,27 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="log" value="16" />
-          <entry key="py" value="67" />
+          <entry key="log" value="20" />
+          <entry key="py" value="86" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="16" />
-          <entry key="Python" value="67" />
+          <entry key="PLAIN_TEXT" value="20" />
+          <entry key="Python" value="86" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="1364" />
           <entry key="dummy" value="1" />
-          <entry key="py" value="3767" />
+          <entry key="py" value="4735" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="5131" />
+          <entry key="Python" value="6099" />
         </counts>
       </usages-collector>
     </session>
@@ -57,15 +59,24 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/joint_cluster_cnn.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="643" column="52" selection-start-line="643" selection-start-column="52" selection-end-line="643" selection-end-column="52" />
+            <state relative-caret-position="456">
+              <caret line="596" column="35" lean-forward="true" selection-start-line="596" selection-start-column="35" selection-end-line="596" selection-end-column="35" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
-                <marker date="1539310461728" expanded="true" signature="1573:1869" ph="..." />
-                <marker date="1539310461728" expanded="true" signature="28641:28643" ph="..." />
-                <marker date="1539310461728" expanded="true" signature="28641:28647" ph="..." />
-                <marker date="1539310461728" expanded="true" signature="28641:29456" ph="..." />
+                <marker date="1539521712235" expanded="true" signature="1573:1869" ph="..." />
+                <marker date="1539521712235" expanded="true" signature="29280:29282" ph="..." />
+                <marker date="1539521712235" expanded="true" signature="29280:29286" ph="..." />
+                <marker date="1539521712235" expanded="true" signature="29280:30095" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://E:/Python36/Lib/site-packages/tensorflow/python/ops/variables.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5">
+              <caret line="2590" lean-forward="true" selection-start-line="2590" selection-end-line="2590" />
             </state>
           </provider>
         </entry>
@@ -73,8 +84,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/learning_rate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="50" column="41" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="41" />
+            <state relative-caret-position="334">
+              <caret line="81" column="29" lean-forward="true" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="29" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -137,36 +148,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>call</find>
-      <find>kernel_size</find>
-      <find>build</find>
-      <find>bui</find>
-      <find>triplet</find>
-      <find>build_model</find>
-      <find>self.mo</find>
-      <find>train(</find>
-      <find>evaluat</find>
-      <find>finished extraction of feature</find>
-      <find>predict</find>
-      <find>save_weights</find>
-      <find>find_closest_clusters</find>
-      <find>load(</find>
-      <find>loggin</find>
-      <find>pred</find>
-      <find>load_</find>
-      <find>def</find>
-      <find>final</find>
-      <find>clusters_init</find>
-      <find>weight_save_path</find>
-      <find>ln</find>
-      <find>learning_rate</find>
-      <find>==</find>
-      <find>get_triplet</find>
-      <find>MomentumOptimizer</find>
-      <find>iter_cnn</find>
       <find>parent</find>
       <find>learn</find>
       <find>gamma_lr</find>
+      <find>build</find>
+      <find>self.learning_rate</find>
+      <find>self.optimizer</find>
+      <find>self.optimizer</find>
+      <find>features</find>
+      <find>predic</find>
+      <find>_lear</find>
+      <find>train</find>
+      <find>self.neg_idx</find>
+      <find>model</find>
+      <find>self.le</find>
+      <find>evaluation2</find>
+      <find>recurrent_process</find>
+      <find>gamma_tr</find>
+      <find>average</find>
+      <find>self.</find>
+      <find>learning_rate</find>
+      <find>margin</find>
+      <find>train_step</find>
+      <find>optimizer</find>
+      <find>get_triplet</find>
+      <find>learning_</find>
+      <find>loss</find>
+      <find>triplet</find>
+      <find>triplet_</find>
+      <find>get_trip</find>
+      <find>num_nsampling</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -214,6 +225,11 @@
             <path>
               <item name="Jule" type="b2602c69:ProjectViewProjectNode" />
               <item name="Jule" type="462c0819:PsiDirectoryNode" />
+              <item name="logfile" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Jule" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Jule" type="462c0819:PsiDirectoryNode" />
               <item name="results" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -255,7 +271,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.learning_rate">
+  <component name="RunManager" selected="Python.joint_cluster_cnn">
     <configuration name="joint_cluster_cnn" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Jule" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -342,9 +358,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.joint_cluster_cnn" />
         <item itemvalue="Python.learning_rate" />
         <item itemvalue="Python tests.pytest in learning_rate.py" />
-        <item itemvalue="Python.joint_cluster_cnn" />
         <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
@@ -407,12 +423,12 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25869337" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25869337" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.329718" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.13665944" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2624729" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.36442515" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -453,12 +469,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/joint_cluster_cnn.py</url>
-          <line>606</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/joint_cluster_cnn.py</url>
-          <line>708</line>
+          <line>693</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
       </breakpoints>
@@ -507,20 +518,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="1152" column="12" lean-forward="true" selection-start-line="1152" selection-start-column="12" selection-end-line="1152" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://E:/Python36/Lib/site-packages/tensorflow/python/training/adam.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="258">
-          <caret line="105" column="26" lean-forward="true" selection-start-line="105" selection-start-column="26" selection-end-line="105" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/127753733/numpy/random/mtrand.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="1800" column="4" lean-forward="true" selection-start-line="1800" selection-start-column="4" selection-end-line="1800" selection-end-column="4" />
         </state>
       </provider>
     </entry>
@@ -694,9 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/logfile/mnist-test11-10-2018_20-26-46.log">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/logfile/mnist-test11-10-2018_21-19-03.log">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -717,9 +711,6 @@
           <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/transfer_kmeans.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -766,26 +757,95 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://E:/Python36/Lib/site-packages/tensorflow/python/ops/init_ops.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="209" column="39" lean-forward="true" selection-start-line="209" selection-start-column="39" selection-end-line="209" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/Python36/Lib/site-packages/tensorflow/python/training/momentum.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="387">
+          <caret line="67" column="22" lean-forward="true" selection-start-line="67" selection-start-column="22" selection-end-line="67" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/Python36/Lib/site-packages/numpy/lib/npyio.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="617" column="38" lean-forward="true" selection-start-line="617" selection-start-column="38" selection-end-line="617" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/transfer_kmeans.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://E:/Python36/Lib/site-packages/tensorflow/python/training/adam.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-624">
+          <caret line="39" column="6" selection-start-line="39" selection-start-column="6" selection-end-line="39" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/learning_rate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="50" column="41" selection-start-line="50" selection-start-column="41" selection-end-line="50" selection-end-column="41" />
+        <state relative-caret-position="334">
+          <caret line="81" column="29" lean-forward="true" selection-start-line="81" selection-start-column="29" selection-end-line="81" selection-end-column="29" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/logfile/mnist-test12-10-2018_15-40-11.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="483">
+          <caret line="422" lean-forward="true" selection-start-line="422" selection-end-line="422" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logfile/mnist-test12-10-2018_15-52-17.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logfile/mnist-test11-10-2018_20-26-46.log">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/logfile/mnist-test12-10-2018_11-13-30.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/Python36/Lib/site-packages/tensorflow/python/ops/variables.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5">
+          <caret line="2590" lean-forward="true" selection-start-line="2590" selection-end-line="2590" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.2/system/python_stubs/127753733/numpy/random/mtrand.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="388">
+          <caret line="1787" column="24" lean-forward="true" selection-start-line="1787" selection-start-column="24" selection-end-line="1787" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/joint_cluster_cnn.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="643" column="52" selection-start-line="643" selection-start-column="52" selection-end-line="643" selection-end-column="52" />
+        <state relative-caret-position="456">
+          <caret line="596" column="35" lean-forward="true" selection-start-line="596" selection-start-column="35" selection-end-line="596" selection-end-column="35" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
-            <marker date="1539310461728" expanded="true" signature="1573:1869" ph="..." />
-            <marker date="1539310461728" expanded="true" signature="28641:28643" ph="..." />
-            <marker date="1539310461728" expanded="true" signature="28641:28647" ph="..." />
-            <marker date="1539310461728" expanded="true" signature="28641:29456" ph="..." />
+            <marker date="1539521712235" expanded="true" signature="1573:1869" ph="..." />
+            <marker date="1539521712235" expanded="true" signature="29280:29282" ph="..." />
+            <marker date="1539521712235" expanded="true" signature="29280:29286" ph="..." />
+            <marker date="1539521712235" expanded="true" signature="29280:30095" ph="..." />
           </folding>
         </state>
       </provider>
